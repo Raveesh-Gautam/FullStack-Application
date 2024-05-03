@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.http.HttpStatus;
 
 import com.smart.model.User;
 import com.smart.repository.UserRepository;
@@ -36,6 +36,11 @@ public class UserController {
         return userRepository.findAll();
     }
 
+    @GetMapping("/test")
+    public String testApi() {
+        return "Hello from the test function";
+    }
+
     @PutMapping("/user/{id}")
     public void updateUser(@RequestBody User user, @PathVariable Long id) {
         Optional<User> existingUserOptional = userRepository.findById(id);
@@ -50,9 +55,10 @@ public class UserController {
             throw new UserNotFoundException(id);
         }
     }
+
     @DeleteMapping("user/{id}")
     public void DeleteUser(@PathVariable Long id) {
-    	userRepository.deleteById(id);
+        userRepository.deleteById(id);
     }
 
 }
